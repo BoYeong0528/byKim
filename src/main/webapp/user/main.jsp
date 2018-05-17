@@ -33,7 +33,7 @@
           <h1 class="page-header">★☆환영합니다☆★</h1>
 
           <div class="table-responsive">
-            <img alt="롸이언" src="${pageContext.request.contextPath }/css/라이언10.png" width="90%">
+            <img alt="롸이언" src="${pageContext.request.contextPath }/css/rion10.png" width="90%">
           </div>
         </div>
       </div>
