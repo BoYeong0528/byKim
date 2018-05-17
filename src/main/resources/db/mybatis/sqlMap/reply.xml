@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="reply">
+
+	<select id="getOneBoardAllReply" resultType="rpvo" parameterType="int">
+		select 
+			  rp_seq 
+			, rp_bd_seq
+			, rp_mem_id
+			, rp_reg_dt
+			, rp_del_yn
+			, decode(RP_DEL_YN, 'Y', RP_CONTENT,'삭제된 댓글 입니다.') "rp_content"
+		from reply
+		where RP_BD_SEQ=#{bd_seq}
+		order by rp_seq desc
+	</select>
+	
+	<insert id="insertReply" parameterType="rpvo">
+		insert into reply values(rp_seq.nextval, #{rp_bd_seq}, #{rp_mem_id}, sysdate, 'Y', #{rp_content})
+	</insert>
+	
+	<update id="updateReplyYN" parameterType="int">
+		update REPLY
+		set RP_DEL_YN='N'
+		where RP_SEQ=#{rp_seq}
+	</update>
+</mapper>

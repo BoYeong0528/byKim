@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="bbs">
+
+  <select id="getBbsList" resultType="bbsvo" >
+  		select rownum
+    		, bbs.*
+		from bbs
+		where bbs_yn='Y'
+		order by BBS_SEQ
+  </select>
+  
+  <select id="getAllBbsList" resultType="bbsvo" >
+  		select rownum
+    		, bbs.*
+		from bbs
+		order by BBS_SEQ
+  </select>
+  
+  <insert id="insertBbs" parameterType="bbsvo">
+  		insert into bbs values(BBS_SEQ.nextval, #{bbs_name}, #{bbs_mem_id}, sysdate, 'Y')
+  </insert>
+  
+  <update id="updateBbs" parameterType="int">
+  		update  bbs
+		set bbs_yn = DECODE(bbs_yn, 'Y', 'N', 'Y')
+		where bbs_seq=#{bbs_seq}
+  </update>
+  
+</mapper>

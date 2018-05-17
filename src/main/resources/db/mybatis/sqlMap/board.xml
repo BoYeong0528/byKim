@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="board">
+
+  <select id="getAllBoard" resultType="boardvo" parameterType="map">
+  		select *
+		from(
+		select rownum rn,
+		    level,
+		    BD_BBS_SEQ ,
+			BD_SEQ ,
+			PBD_SEQ ,
+	    	LPAD('　', (level-1)*2 ,'　') || LPAD('┖',level-1,'　')|| DECODE(BD_DEL_YN, 'Y', BD_TITLE, '삭제된 게시글입니다.')  "BD_TITLE",
+			BD_CONTENT ,
+			BD_REG_ID ,
+			BD_REG_DT ,
+			BD_DEL_YN 
+		from board
+		where BD_BBS_SEQ=#{cpage}
+		start with PBD_SEQ is null
+		connect by prior BD_SEQ=PBD_SEQ
+		order siblings by bd_seq desc)
+		where (rn between ((#{page}-1)*#{pageSize})+1 and #{pageSize}*#{page})
+  </select>
+  
+<!--   <select id="getAllBoard" resultType="boardvo" parameterType="map"> -->
+<!--   		select * -->
+<!-- 		from   -->
+<!-- 			(select rownum rn, -->
+<!-- 					BD_BBS_SEQ , -->
+<!-- 					BD_SEQ , -->
+<!-- 					PBD_SEQ , -->
+<!-- 					DECODE(BD_DEL_YN, 'Y', BD_TITLE, '삭제된 게시글입니다.') "BD_TITLE", -->
+<!-- 					BD_CONTENT , -->
+<!-- 					BD_REG_ID , -->
+<!-- 					BD_REG_DT , -->
+<!-- 					BD_DEL_YN  -->
+<!-- 			from BOARD -->
+<!-- 			where BD_BBS_SEQ=#{cpage} -->
+<!-- 			order by bd_seq desc, rn asc)  -->
+<!--     	where (rn between  ((#{page}-1)*#{pageSize})+1 and #{pageSize}*#{page}) and (BD_BBS_SEQ=#{cpage}) -->
+<!--   		start  with PBD_SEQ is null -->
+<!-- 		connect by prior BD_SEQ = PBD_SEQ -->
+<!--   </select> -->
+  
+  <select id="getBoardTotalCnt" parameterType="int" resultType="int">
+  		select count(*)
+  		from board
+  		where BD_BBS_SEQ=#{cpage}
+  </select>
+  
+  <insert id="insertBoard" parameterType="boardvo">
+  		<selectKey keyProperty="bd_seq" resultType="int" order="BEFORE">
+				SELECT bd_seq.nextval FROM dual
+		</selectKey>
+  		insert into board values(#{bd_bbs_seq}, #{bd_seq}, #{pbd_seq, jdbcType=INTEGER}, #{bd_title}, #{bd_content}, #{bd_reg_id}, sysdate, 'Y')
+  </insert>
+  
+  <select id="getOneBoard" parameterType="int" resultType="boardvo">
+  		select * from BOARD where BD_SEQ=#{bd_seq}
+  </select>
+  
+  <update id="updateReWrite" parameterType="boardvo">
+  		update board
+		set bd_title=#{bd_title},
+		    bd_content=#{bd_content},
+		    bd_reg_dt=sysdate
+		where BD_SEQ=#{bd_seq}
+  </update>
+  
+  <update id="updateYNvalue" parameterType="int">
+  		update BOARD
+		set BD_DEL_YN='N'
+		where BD_SEQ=#{bd_seq}
+  </update>
+  
+</mapper>
