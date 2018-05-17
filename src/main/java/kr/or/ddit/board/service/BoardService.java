@@ -141,7 +141,7 @@ public class BoardService implements BoardServiceInf{
 		pageNav.append("	<ul class=\"pagination\">");
 		if(page!=1) {
 			pageNav.append("		<li>");
-			pageNav.append("			<a href=\"board?cpage="+cpage+"&page="+page+"&pagesize=10\" aria-label=\"Previous\">");
+			pageNav.append("			<a href=\"board?cpage="+cpage+"&page="+1+"&pagesize=10\" aria-label=\"Previous\">");
 			pageNav.append("			<span aria-hidden=\"true\">&laquo;</span></a>");
 			pageNav.append("		</li>");
 		}
