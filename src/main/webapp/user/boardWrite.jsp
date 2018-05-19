@@ -13,21 +13,42 @@
 <title>Free Board</title>
 <!-- Bootstrap core CSS -->
 <link href="${pageContext.request.contextPath }/css/bootstrap.min.css" rel="stylesheet">
-
+<script src="${pageContext.request.contextPath}/SE2/js/HuskyEZCreator.js"></script>
 <!-- Custom styles for this template -->
 <link href="${pageContext.request.contextPath }/css/dashboard.css" rel="stylesheet">
 <%@ include file="/include/jsscript.jsp" %>
 <script>
 	$(function(){
+		var oEditors = []; // 개발되어 있는 소스에 맞추느라, 전역변수로 사용하였지만, 지역변수로 사용해도 전혀 무관 함.
+
+		$(document).ready(function() {
+			// Editor Setting
+			nhn.husky.EZCreator.createInIFrame({
+				oAppRef : oEditors, // 전역변수 명과 동일해야 함.
+				elPlaceHolder : "smarteditor", // 에디터가 그려질 textarea ID 값과 동일 해야 함.
+				sSkinURI : "${pageContext.request.contextPath}/SE2/SmartEditor2Skin.html", // Editor HTML
+				fCreator : "createSEditor2", // SE2BasicCreator.js 메소드명이니 변경 금지 X
+				htParams : {
+					// 툴바 사용 여부 (true:사용/ false:사용하지 않음)
+					bUseToolbar : true,
+					// 입력창 크기 조절바 사용 여부 (true:사용/ false:사용하지 않음)
+					bUseVerticalResizer : true,
+					// 모드 탭(Editor | HTML | TEXT) 사용 여부 (true:사용/ false:사용하지 않음)
+					bUseModeChanger : true, 
+				}
+			});
+		})	
 		$('#write').click(function(){
 			if( $('input[type=text]').val().trim().length == 0 ){
 				alert("제목을 입력해주세요");
 				return;
 			}
-			if( $('textarea').val().trim().length == 0 ){
-				alert("내용을 입력해주세요");
+			var contents = $.trim(oEditors[0].getContents());
+			if(contents === '<p>&nbsp;</p>' || contents === ''){
+				alert("내용을 입력하세요.");
 				return;
 			}
+			oEditors.getById["smarteditor"].exec("UPDATE_CONTENTS_FIELD", []);
 			$('form').submit();
 		})
 		
@@ -70,7 +91,7 @@
 								<td><input type="text" name="bd_title" placeholder="제목을 입력해주세요" ></td>
 							</tr>
 							<tr>
-								<td><textarea name="bd_content" placeholder="내용을 입력해주세요"></textarea></td>
+								<td><textarea name="bd_content" id="smarteditor"></textarea></td>
 							</tr>
 							<tr>
 								<td>

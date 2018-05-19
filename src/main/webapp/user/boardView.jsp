@@ -108,11 +108,11 @@
 							<tr>
 								<td><label>${vo.bd_title }</label></td>
 							</tr>
-							<tr>
+							<tr style="border-bottom: 1px solid #dbdbdb;">
 								<td>작성자 : ${vo.bd_reg_id } &nbsp;&nbsp;&nbsp; 작성일시 : ${vo.bd_reg_dt }</td>
 							</tr>
 							<tr>
-								<td><textarea class="textarea" name="bd_content" readonly="readonly">${vo.bd_content }</textarea></td>
+								<td>${vo.bd_content }</td>
 							</tr>
 							<tr>
 							<c:forEach items="${attlist }" var="atlist">
