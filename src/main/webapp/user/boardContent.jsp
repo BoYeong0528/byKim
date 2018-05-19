@@ -32,9 +32,6 @@
 	            	<!-- Table -->
 						<h3>삭제된 게시글입니다.</h3>
 	          </div>
-	          <div class="right"  align="right">
-	          <button type="button" id="back">목록으로</button>
-	          </div>
           </form>
         </div>
       </div>

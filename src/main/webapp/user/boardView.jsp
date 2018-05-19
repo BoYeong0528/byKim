@@ -128,7 +128,7 @@
 			          	</c:if>
 			          </div>
 			          <div width="100%" style="padding: 5px">
-			          		<textarea maxlength="10" id="replyarea" class="tea" name="rp_content"></textarea>
+			          		<textarea maxlength="500" id="replyarea" class="tea" name="rp_content"></textarea>
 			          		<button class="bt" type="button" id="setRP" >댓글등록</button>
 			          		<p>남은 글자 : <span id="sap">100</span></p>
 			          </div>

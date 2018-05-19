@@ -48,7 +48,7 @@ public class OneBoardServlet extends HttpServlet {
 		BoardVO vo = service.getOneBoard(bd_seq);
 		List<ReplyVO> list = rpservice.getOneBoardAllReply(bd_seq);
 		List<AttachmentVO> atlist = attservice.getBoardAttach(bd_seq);
-		if(vo.getBd_del_yn().equals("Y") || request.getSession().getAttribute("userId").equals(vo.getBd_reg_id())){
+		if(vo.getBd_del_yn().equals("Y")){
 			request.setAttribute("attlist", atlist);
 			request.setAttribute("vo", vo);
 			request.setAttribute("rplist", list);

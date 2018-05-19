@@ -144,6 +144,10 @@ public class BoardService implements BoardServiceInf{
 			pageNav.append("			<a href=\"board?cpage="+cpage+"&page="+1+"&pagesize=10\" aria-label=\"Previous\">");
 			pageNav.append("			<span aria-hidden=\"true\">&laquo;</span></a>");
 			pageNav.append("		</li>");
+			pageNav.append("		<li>");
+			pageNav.append("			<a href=\"board?cpage="+cpage+"&page="+(page-1)+"&pagesize=10\" aria-label=\"Previous\">");
+			pageNav.append("			<span aria-hidden=\"true\">&lt;</span></a>");
+			pageNav.append("		</li>");
 		}
 		for(int i = 1; i<pageToTalCnt+1 ; i++){
 			if(i==page) 
@@ -152,6 +156,10 @@ public class BoardService implements BoardServiceInf{
 				pageNav.append("			<li><a href=\"board?cpage="+cpage+"&page="+(i)+"&pagesize=10\">"+i+"</a></li>");
 		}
 		if(page!=pageToTalCnt){
+			pageNav.append("		<li>");
+			pageNav.append("			<a href=\"board?cpage="+cpage+"&page="+(page+1)+"&pagesize=10\" aria-label=\"Next\">");
+			pageNav.append("			<span aria-hidden=\"true\">&gt;</span>");
+			pageNav.append("			</a></li>");
 			pageNav.append("		<li>");
 			pageNav.append("			<a href=\"board?cpage="+cpage+"&page="+pageToTalCnt+"&pagesize=10\" aria-label=\"Next\">");
 			pageNav.append("			<span aria-hidden=\"true\">&raquo;</span>");

@@ -70,9 +70,11 @@
 							<tr>
 								<td><textarea name="bd_content" placeholder="내용을 입력해주세요">${vo.bd_content }</textarea></td>
 							</tr>
-							<tr>
-								<td><input type="file" name="att_path"></td>
-							</tr>
+							<c:forEach items="${attlist }" var="at">
+								<tr>
+									<td><input type="file" name="att_path" value="${at.att_path }"></td>
+								</tr>
+							</c:forEach>
 						</table>
 						<input type="hidden" name="bd_seq" value="${vo.bd_seq }">
 			          <div class="right"  align="right">
